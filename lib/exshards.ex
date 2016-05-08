@@ -15,7 +15,7 @@ defmodule ExShards.Helper do
       end
   """
   defmacro defapi(fun, arity) do
-    mod = Application.get_env(:exshards, :adapter, :ets)
+    mod = Application.get_env(:exshards, :adapter, :shards)
     args = 1..arity
       |> Enum.map(&(Module.concat(["arg#{&1}"])))
       |> Enum.map(fn(x) -> {x, [], ExShards.Helper} end)
@@ -78,7 +78,6 @@ defmodule ExShards do
   defapi :match_spec_run, 2
   defapi :member, 2
   defapi :new, 2
-  defapi :new, 3 # only for shards
   defapi :next, 2
   defapi :prev, 2
   defapi :rename, 2

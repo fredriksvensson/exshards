@@ -5,7 +5,7 @@
 
 This is a wrapper on top of [ETS](http://erlang.org/doc/man/ets.html) and [Shards](https://github.com/cabol/shards).
 
-**Shards** is a simple library to scale-out ETS tables, which implements the same ETS API.
+[Shards](https://github.com/cabol/shards) is a simple library to scale-out ETS tables, which implements the same ETS API.
 Taking advantage of this, what **ExShards** does is provides a wrapper to use either `ets` or
 `shards` totally transparent.
 
@@ -49,8 +49,9 @@ Once into the Elixir console:
 > require ExShards
 nil
 
-> ExShards.new :mytab, [:public, :named_table]
-:mytab
+# create a table with default options
+> ExShards.new :mytab, []
+{:mytab, {:shards_local, :set, 8}}
 
 > ExShards.insert :mytab, [k1: 1, k2: 2, k3: 3]
 true
@@ -66,59 +67,32 @@ true
 true
 > ExShards.lookup :mytab, :k3
 []
-```
 
-As you might have noticed, it's extremely easy, such as you were using **ETS** API directly.
+# let's create another table
+> ExShards.new :mytab, [{:n_shards, 5}]
+{:mytab2, {:shards_local, :set, 5}}
 
-By default, all **ExShards** functions are mapped to use **ETS** module, but if you want to use
-**Shards** instead, you only have to do a little change in the config:
-
-```elixir
-config :exshards,
-  adapter: :shards
-```
-
-Previous config, changes the adapter/module to use, from `ets` to `shards`.
-
-Now let's start again an Elixir console with this new config:
-
-Once into the Elixir console:
-
-```elixir
-> require ExShards
-
-> ExShards.new :mytab, [:public, :named_table], 5
-:mytab
-
+# start the observer so you can see how shards looks like
 > :observer.start
 :ok
 ```
 
-You will find in the **Applications** tab, the `shards` app running, with the `5` shards
-given in the `new/3` function.
+As you might have noticed, it's extremely easy, such as you were using **ETS** API directly.
 
-And as I mentioned before, because `shards` implements the same ETS API, you can keep using
-**ExShards** as previously:
+By default, all **ExShards** functions are mapped to use **Shards** module, but if you want to use
+**ETS** instead, you only have to do a little change in the config:
 
 ```elixir
-> ExShards.insert :mytab, [k1: 1, k2: 2, k3: 3]
-true
-
-> ExShards.lookup :mytab, :k1
-[k1: 1]
-> ExShards.lookup :mytab, :k2
-[k2: 2]
-> ExShards.lookup :mytab, :k3
-[k3: 3]
-
-> ExShards.delete :mytab, :k3
-true
-> ExShards.lookup :mytab, :k3
-[]
+config :exshards,
+  adapter: :ets
 ```
 
-Extremely easy isn't? **ExShards** is an abstraction layer for either `ets` or `shards`,
-everything transparent, out-of-the-box.
+Previous config, changes the adapter/module to use, from `shards` to `ets`.
+
+For more information about `shards` you can go to these links:
+
+ * [shards](https://github.com/cabol/shards): Original Erlang project.
+ * [Blog Post about Shards](http://cabol.github.io/posts/2016/04/14/sharding-support-for-ets.html).
 
 
 ## Copyright and License
