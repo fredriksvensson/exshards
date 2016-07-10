@@ -1,1 +1,1 @@
-%{"shards": {:git, "https://github.com/cabol/shards.git", "20868d6102a6b6197f7ad85f095b7e7acb8c1cf8", [branch: "master"]}}
+%{"shards": {:hex, :shards, "0.3.0"}}

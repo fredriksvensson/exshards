@@ -40,8 +40,8 @@ defmodule ExShards do
   ETS/Shards API.
 
   Links:
-    * [ETS API](http://erlang.org/doc/man/ets.html)
-    * [Shards API](https://github.com/cabol/shards/issues/1)
+    * [ETS](http://erlang.org/doc/man/ets.html)
+    * [Shards](https://github.com/cabol/shards)
   """
   defapi :all, 0
   defapi :delete, 1

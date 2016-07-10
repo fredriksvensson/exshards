@@ -18,7 +18,7 @@ To start playing with `exshards` you just have to follow these simple steps:
 
   ```elixir
   def deps do
-    [{:exshards, github: "cabol/exshards", branch: "master"}]
+    [{:shards, "~> 0.3.0"}]
   end
   ```
 
@@ -51,17 +51,17 @@ nil
 
 # create a table with default options
 > ExShards.new :mytab, []
-{:mytab, {:shards_local, :set, 8}}
+{:mytab,
+ {:state, :shards_local, 8, &:shards_local.pick/3, &:shards_local.pick/3}}
 
 > ExShards.insert :mytab, [k1: 1, k2: 2, k3: 3]
 true
 
-> ExShards.lookup :mytab, :k1
-[k1: 1]
-> ExShards.lookup :mytab, :k2
-[k2: 2]
-> ExShards.lookup :mytab, :k3
-[k3: 3]
+> for k <- [:k1, :k2, :k3] do        
+  [{_, v}] = ExShards.lookup(:mytab, k)
+  v
+end
+[1, 2, 3]
 
 > ExShards.delete :mytab, :k3
 true
@@ -69,8 +69,9 @@ true
 []
 
 # let's create another table
-> ExShards.new :mytab, [{:n_shards, 5}]
-{:mytab2, {:shards_local, :set, 5}}
+> ExShards.new :mytab2, [{:n_shards, 5}]
+{:mytab2,
+ {:state, :shards_local, 5, &:shards_local.pick/3, &:shards_local.pick/3}}
 
 # start the observer so you can see how shards looks like
 > :observer.start
