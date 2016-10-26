@@ -55,6 +55,7 @@ defmodule ExShards do
   defapi :foldr, 3
   defapi :from_dets, 2
   defapi :fun2ms, 1
+  defapi :get_nodes, 1
   defapi :give_away, 3
   defapi :i, 0
   defapi :i, 1
@@ -64,7 +65,10 @@ defmodule ExShards do
   defapi :insert, 2
   defapi :insert_new, 2
   defapi :is_compiled_ms, 1
+  defapi :join, 2
   defapi :last, 1
+  defapi :leave, 2
+  defapi :list, 1
   defapi :lookup, 2
   defapi :lookup_element, 3
   defapi :match, 2
@@ -93,6 +97,7 @@ defmodule ExShards do
   defapi :select_reverse, 1
   defapi :setopts, 2
   defapi :slot, 2
+  defapi :state, 1
   defapi :tab2file, 2
   defapi :tab2file, 3
   defapi :tab2list, 1
