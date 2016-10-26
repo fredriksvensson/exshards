@@ -15,6 +15,6 @@ defmodule ExShards.Mixfile do
   end
 
   defp deps do
-    [{:shards, "~> 0.3.0"}]
+    [{:shards, "~> 0.3.1"}]
   end
 end
